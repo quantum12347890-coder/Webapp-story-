@@ -87,7 +87,7 @@
         // Fetch JSON Data dynamically
         async function loadStories() {
             try {
-                const response = await fetch('data/stories.json');
+                const response = await fetch('stories.json');
                 appData.stories = await response.json();
                 router.navigate('home');
             } catch (error) {
