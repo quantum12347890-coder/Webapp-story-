@@ -21,15 +21,35 @@
             }
         }
     </script>
-    <!-- FontAwesome & Google Fonts -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #090a0f; color: #e2e8f0; }
-        h1, h2, h3, .cinzel-font { font-family: 'Cinzel', serif; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #090a0f;
+            color: #e2e8f0;
+        }
+        h1, h2, h3, .cinzel-font {
+            font-family: 'Cinzel', serif;
+        }
         .hero-bg {
             background: linear-gradient(to bottom, rgba(9, 10, 15, 0.4), rgba(9, 10, 15, 0.95)), 
                         url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e2230;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
         }
     </style>
 </head>
@@ -38,39 +58,167 @@
     <!-- Header Navigation -->
     <header class="sticky top-0 z-50 backdrop-blur-md bg-darkBg/80 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
             <div class="flex items-center space-x-3 cursor-pointer" onclick="router.navigate('home')">
-                <div class="w-10 h-10 rounded-full border border-goldAccent flex items-center justify-center bg-goldAccent/10 text-goldAccent font-bold text-xl">SV</div>
+                <div class="w-10 h-10 rounded-full border border-goldAccent flex items-center justify-center bg-goldAccent/10 text-goldAccent font-bold text-xl shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+                    SV
+                </div>
                 <div>
                     <span class="text-xl sm:text-2xl font-black tracking-widest text-white cinzel-font">STORYVERSE</span>
                     <span class="block text-[10px] tracking-widest text-goldAccent uppercase font-semibold">Cinematic Edition</span>
                 </div>
             </div>
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                <button onclick="router.navigate('home')" class="text-white hover:text-goldAccent transition">Home</button>
-                <button onclick="router.navigate('stories')" class="text-gray-400 hover:text-goldAccent transition">Explore</button>
-                <button onclick="router.navigate('categories')" class="text-gray-400 hover:text-goldAccent transition">Categories</button>
-                <button onclick="router.navigate('about')" class="text-gray-400 hover:text-goldAccent transition">About</button>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                <button onclick="router.navigate('home')" class="nav-link text-white hover:text-goldAccent transition">Home</button>
+                <button onclick="router.navigate('stories')" class="nav-link text-gray-400 hover:text-goldAccent transition">Explore</button>
+                <button onclick="router.navigate('categories')" class="nav-link text-gray-400 hover:text-goldAccent transition">Categories</button>
+                <button onclick="router.navigate('about')" class="nav-link text-gray-400 hover:text-goldAccent transition">About</button>
+                <button onclick="router.navigate('contact')" class="nav-link text-gray-400 hover:text-goldAccent transition">Contact</button>
             </nav>
+
+            <!-- Actions -->
             <div class="flex items-center space-x-4">
-                <input type="text" placeholder="Search stories..." oninput="handleSearch(this.value)" class="hidden sm:block bg-cardBg border border-white/10 rounded-full py-2 px-4 text-xs text-white focus:outline-none focus:border-goldAccent w-48">
+                <div class="relative hidden sm:block">
+                    <input type="text" id="searchInput" placeholder="Search stories..." oninput="handleSearch(this.value)" class="bg-cardBg border border-white/10 rounded-full py-2 pl-10 pr-4 text-xs text-white focus:outline-none focus:border-goldAccent w-48 lg:w-64 transition">
+                    <i class="fa-solid fa-search absolute left-3.5 top-3 text-gray-400 text-xs"></i>
+                </div>
+                <button onclick="openPublishModal()" class="bg-gradient-to-r from-amber-500 to-goldAccent hover:from-amber-600 hover:to-amber-500 text-black font-bold px-4 py-2 rounded-full text-xs uppercase tracking-wider transition shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+                    <i class="fa-solid fa-plus mr-1"></i> Submit Story
+                </button>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-white text-xl p-2">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobileMenu" class="hidden md:hidden bg-cardBg border-b border-white/10 px-6 py-4 space-y-3">
+            <input type="text" placeholder="Search stories..." oninput="handleSearch(this.value); toggleMobileMenu();" class="w-full bg-darkBg border border-white/10 rounded-lg py-2 px-4 text-sm text-white mb-2">
+            <button onclick="router.navigate('home'); toggleMobileMenu();" class="block w-full text-left py-2 text-white font-medium">Home</button>
+            <button onclick="router.navigate('stories'); toggleMobileMenu();" class="block w-full text-left py-2 text-gray-300">Explore Stories</button>
+            <button onclick="router.navigate('categories'); toggleMobileMenu();" class="block w-full text-left py-2 text-gray-300">Categories</button>
+            <button onclick="router.navigate('about'); toggleMobileMenu();" class="block w-full text-left py-2 text-gray-300">About Us</button>
+            <button onclick="router.navigate('contact'); toggleMobileMenu();" class="block w-full text-left py-2 text-gray-300">Contact</button>
         </div>
     </header>
 
-    <!-- Main Content Container -->
+    <!-- Main Dynamic Content Container -->
     <main id="appContent" class="flex-grow flex items-center justify-center py-20">
         <div class="text-goldAccent text-center">
-            <i class="fa-solid fa-spinner fa-spin text-3xl mb-2"></i>
-            <p class="text-xs tracking-wider uppercase">Loading StoryVerse Archive...</p>
+            <i class="fa-solid fa-spinner fa-spin text-3xl mb-3"></i>
+            <p class="text-xs tracking-wider uppercase font-semibold">Loading StoryVerse Archive...</p>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-cardBg border-t border-white/10 mt-20 py-8 text-center text-xs text-gray-500">
-        <p>© 2026 STORYVERSE. JSON-Driven GitHub Pages Ready.</p>
+    <footer class="bg-cardBg border-t border-white/10 mt-20 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-8 h-8 rounded-full border border-goldAccent flex items-center justify-center bg-goldAccent/10 text-goldAccent font-bold text-lg">
+                        SV
+                    </div>
+                    <span class="text-xl font-bold tracking-widest text-white cinzel-font">STORYVERSE</span>
+                </div>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    The premier destination for cinematic storytelling, immersive lore, moral lessons, and motivational journeys. JSON-Driven & GitHub Pages Ready.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold cinzel-font mb-4 text-sm tracking-wider">Quick Links</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><button onclick="router.navigate('home')" class="hover:text-goldAccent transition">Home Page</button></li>
+                    <li><button onclick="router.navigate('stories')" class="hover:text-goldAccent transition">All Stories</button></li>
+                    <li><button onclick="router.navigate('categories')" class="hover:text-goldAccent transition">Browse Categories</button></li>
+                    <li><button onclick="router.navigate('about')" class="hover:text-goldAccent transition">About Platform</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold cinzel-font mb-4 text-sm tracking-wider">Categories</h4>
+                <ul class="space-y-2 text-xs text-gray-400">
+                    <li><button onclick="filterByCategory('Creative')" class="hover:text-goldAccent transition">Creative Fiction</button></li>
+                    <li><button onclick="filterByCategory('Islamic')" class="hover:text-goldAccent transition">Islamic Wisdom</button></li>
+                    <li><button onclick="filterByCategory('Horror')" class="hover:text-goldAccent transition">Horror & Mystery</button></li>
+                    <li><button onclick="filterByCategory('Motivational')" class="hover:text-goldAccent transition">Motivational</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold cinzel-font mb-4 text-sm tracking-wider">Newsletter</h4>
+                <p class="text-xs text-gray-400 mb-3">Get epic daily stories straight in your inbox.</p>
+                <div class="flex">
+                    <input type="email" placeholder="Your email..." class="bg-darkBg border border-white/10 rounded-l-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-goldAccent w-full">
+                    <button onclick="showToast('Subscribed successfully!')" class="bg-goldAccent hover:bg-goldHover text-black font-bold px-4 rounded-r-lg text-xs">Join</button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/10 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
+            <p>© 2026 STORYVERSE. All rights reserved. JSON-Driven GitHub Pages Ready.</p>
+            <div class="flex space-x-6 mt-4 sm:mt-0">
+                <button onclick="router.navigate('contact')" class="hover:text-gray-400 transition">Privacy Policy</button>
+                <button onclick="router.navigate('contact')" class="hover:text-gray-400 transition">Terms of Use</button>
+            </div>
+        </div>
     </footer>
 
-    <!-- JavaScript Application Logic -->
+    <!-- Submit Story Modal -->
+    <div id="publishModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-cardBg border border-white/10 rounded-2xl w-full max-w-lg p-6 sm:p-8 m-4 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closePublishModal()" class="absolute right-4 top-4 text-gray-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-bold text-white cinzel-font mb-2">Publish New Story</h3>
+            <p class="text-xs text-gray-400 mb-6">Contribute your tale to the StoryVerse archive.</p>
+            
+            <form id="storyForm" onsubmit="handleStorySubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-gray-300 font-medium mb-1">Story Title</label>
+                    <input type="text" id="newTitle" required placeholder="e.g. The Forgotten Citadel" class="w-full bg-darkBg border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-goldAccent">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 font-medium mb-1">Category</label>
+                        <select id="newCategory" class="w-full bg-darkBg border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-goldAccent">
+                            <option value="Creative">Creative</option>
+                            <option value="Islamic">Islamic</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Funny">Funny</option>
+                            <option value="Moral">Moral</option>
+                            <option value="Motivational">Motivational</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-medium mb-1">Cover Image URL</label>
+                        <input type="url" id="newImage" placeholder="https://images.unsplash.com/..." class="w-full bg-darkBg border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-goldAccent" value="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-medium mb-1">Short Summary</label>
+                    <textarea id="newSummary" rows="2" required placeholder="Brief catchy overview..." class="w-full bg-darkBg border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-goldAccent"></textarea>
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-medium mb-1">Full Story Content</label>
+                    <textarea id="newContent" rows="5" required placeholder="Write your epic story here..." class="w-full bg-darkBg border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-goldAccent"></textarea>
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-medium mb-1">Moral or Key Lesson</label>
+                    <input type="text" id="newMoral" placeholder="What does this story teach?" class="w-full bg-darkBg border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-goldAccent">
+                </div>
+                <button type="submit" class="w-full bg-goldAccent hover:bg-goldHover text-black font-bold py-3 rounded-lg uppercase tracking-wider transition">
+                    Publish to StoryVerse
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-goldAccent text-black font-bold px-6 py-3 rounded-xl shadow-2xl transform translate-y-32 transition duration-300 flex items-center space-x-2 text-xs">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Success action completed.</span>
+    </div>
+
+    <!-- Application JavaScript Layer -->
     <script>
         let appData = {
             categories: [
@@ -81,10 +229,10 @@
                 { id: 'moral', name: 'Moral', icon: 'fa-scale-balanced', desc: 'Lessons that shape character', color: 'from-blue-600 to-cyan-600' },
                 { id: 'motivational', name: 'Motivational', icon: 'fa-mountain-sun', desc: 'Rise above all obstacles', color: 'from-yellow-500 to-amber-600' }
             ],
-            stories: []
+            stories: [] // Will be loaded dynamically from stories.json
         };
 
-        // Fetch JSON Data dynamically
+        // Fetch JSON Data dynamically from root folder
         async function loadStories() {
             try {
                 const response = await fetch('stories.json');
@@ -92,10 +240,16 @@
                 router.navigate('home');
             } catch (error) {
                 console.error('Error fetching stories:', error);
-                document.getElementById('appContent').innerHTML = `<p class="text-red-400 text-xs">Error loading stories.json. Please check file path.</p>`;
+                document.getElementById('appContent').innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-500 text-3xl mb-2"></i>
+                        <p class="text-xs text-red-400">Error loading stories.json. Make sure stories.json is in the root folder alongside index.html.</p>
+                    </div>
+                `;
             }
         }
 
+        // --- CLIENT-SIDE ROUTER ---
         const router = {
             currentRoute: 'home',
             param: null,
@@ -113,126 +267,38 @@
                 else if (this.currentRoute === 'category-detail') container.innerHTML = renderCategoryDetailPage(this.param);
                 else if (this.currentRoute === 'story-detail') container.innerHTML = renderStoryDetailPage(this.param);
                 else if (this.currentRoute === 'about') container.innerHTML = renderAboutPage();
+                else if (this.currentRoute === 'contact') container.innerHTML = renderContactPage();
             }
         };
 
+        // --- PAGE VIEW TEMPLATES ---
+
         function renderHomePage() {
-            const featured = appData.stories.find(s => s.featured) || appData.stories[0];
+            const featured = appData.stories.find(s => s.featured) || appData.stories[0] || {};
             const latest = appData.stories.slice(0, 4);
+
             return `
                 <div class="w-full">
-                    <section class="relative hero-bg py-28 border-b border-white/10 mb-12">
+                    <!-- Hero Section -->
+                    <section class="relative hero-bg py-24 sm:py-36 border-b border-white/10">
                         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                             <div class="max-w-2xl">
-                                <span class="py-1 px-3 rounded-full bg-goldAccent/10 border border-goldAccent/30 text-goldAccent text-xs font-semibold uppercase tracking-widest mb-4 inline-block">Cinematic Platform</span>
-                                <h1 class="text-4xl sm:text-6xl font-black text-white mb-6 cinzel-font">IMMERSE IN EPIC TALES.</h1>
-                                <button onclick="router.navigate('story-detail', ${featured ? featured.id : 1})" class="bg-gradient-to-r from-amber-500 to-goldAccent text-black font-bold px-8 py-3 rounded-full text-xs uppercase tracking-wider">Read Featured Story</button>
-                            </div>
-                        </div>
-                    </section>
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <h2 class="text-2xl font-bold text-white cinzel-font mb-6">Latest Releases</h2>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            ${latest.map(story => renderCard(story)).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderStoriesPage() {
-            return `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-                    <h1 class="text-3xl font-bold text-white cinzel-font mb-6">All Stories Archive</h1>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        ${appData.stories.map(story => renderCard(story)).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderCategoriesPage() {
-            return `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-                    <h1 class="text-3xl font-bold text-white cinzel-font mb-6">Categories</h1>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        ${appData.categories.map(cat => `
-                            <div onclick="filterCategory('${cat.name}')" class="bg-cardBg border border-white/10 p-6 rounded-2xl cursor-pointer hover:border-goldAccent transition">
-                                <h3 class="text-lg font-bold text-white cinzel-font mb-1">${cat.name}</h3>
-                                <p class="text-xs text-gray-400">${cat.desc}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderCategoryDetailPage(catName) {
-            const filtered = appData.stories.filter(s => s.category.toLowerCase() === catName.toLowerCase());
-            return `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-                    <button onclick="router.navigate('categories')" class="text-xs text-goldAccent mb-4 inline-block"><i class="fa-solid fa-arrow-left"></i> Back to Categories</button>
-                    <h1 class="text-3xl font-bold text-white cinzel-font mb-6">${catName} Stories</h1>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        ${filtered.map(story => renderCard(story)).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderStoryDetailPage(id) {
-            const story = appData.stories.find(s => s.id === Number(id)) || appData.stories[0];
-            return `
-                <div class="max-w-3xl mx-auto px-4 py-10 w-full">
-                    <button onclick="router.navigate('home')" class="text-xs text-goldAccent mb-4 inline-block"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
-                    <span class="bg-goldAccent/10 text-goldAccent px-3 py-1 rounded-full text-xs uppercase font-semibold">${story.category}</span>
-                    <h1 class="text-3xl sm:text-4xl font-bold text-white cinzel-font my-4">${story.title}</h1>
-                    <img src="${story.image}" class="w-full h-80 object-cover rounded-2xl mb-6 border border-white/10">
-                    <div class="bg-cardBg p-6 rounded-2xl border border-white/10 space-y-4 text-sm text-gray-300">
-                        <p class="font-semibold text-white italic">${story.summary}</p>
-                        <p class="whitespace-pre-line">${story.content}</p>
-                        ${story.moral ? `<div class="bg-darkBg p-4 rounded-xl border border-goldAccent/30 text-goldAccent text-xs"><strong>Moral:</strong> ${story.moral}</div>` : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderAboutPage() {
-            return `<div class="max-w-2xl mx-auto p-10 text-center"><h1 class="text-3xl font-bold text-white cinzel-font mb-4">About StoryVerse</h1><p class="text-xs text-gray-400">A completely static, JSON-driven story platform ready for GitHub Pages.</p></div>`;
-        }
-
-        function renderCard(story) {
-            return `
-                <div onclick="router.navigate('story-detail', ${story.id})" class="bg-cardBg border border-white/10 hover:border-goldAccent/50 rounded-2xl overflow-hidden cursor-pointer transition flex flex-col justify-between group">
-                    <div>
-                        <div class="h-44 overflow-hidden"><img src="${story.image}" class="w-full h-full object-cover group-hover:scale-105 transition"></div>
-                        <div class="p-4">
-                            <span class="text-[10px] text-goldAccent uppercase font-bold">${story.category}</span>
-                            <h3 class="text-sm font-bold text-white cinzel-font mt-1 line-clamp-1">${story.title}</h3>
-                            <p class="text-xs text-gray-400 line-clamp-2 mt-1">${story.summary}</p>
-                        </div>
-                    </div>
-                    <div class="p-4 pt-0 text-[11px] text-gray-500 border-t border-white/5 flex justify-between">
-                        <span>${story.date}</span>
-                        <span class="text-goldAccent font-semibold">Read &rarr;</span>
-                    </div>
-                </div>
-            `;
-        }
-
-        function filterCategory(name) { router.navigate('category-detail', name); }
-        function handleSearch(q) {
-            if (!q.trim()) return;
-            const res = appData.stories.filter(s => s.title.toLowerCase().includes(q.toLowerCase()));
-            document.getElementById('appContent').innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 py-10 w-full">
-                    <h1 class="text-2xl font-bold text-white cinzel-font mb-6">Search Results for "${q}"</h1>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">${res.map(s => renderCard(s)).join('')}</div>
-                </div>
-            `;
-        }
-
-        window.addEventListener('DOMContentLoaded', loadStories);
-    </script>
-</body>
-</html>
+                                <span class="inline-block py-1 px-3 rounded-full bg-goldAccent/10 border border-goldAccent/30 text-goldAccent text-xs font-semibold uppercase tracking-widest mb-4">
+                                    Cinematic Storytelling Platform
+                                </span>
+                                <h1 class="text-4xl sm:text-6xl font-black text-white mb-6 cinzel-font leading-tight">
+                                    IMMERSE IN EPIC TALES & WISDOM.
+                                </h1>
+                                <p class="text-gray-300 text-sm sm:text-base mb-8 leading-relaxed">
+                                    The ultimate host market for creative literature, Islamic parables, thrilling mysteries, and motivational journeys.
+                                </p>
+                                <div class="flex flex-wrap gap-4">
+                                    ${featured.id ? `
+                                        <button onclick="router.navigate('story-detail', ${featured.id})" class="bg-gradient-to-r from-amber-500 to-goldAccent hover:from-amber-600 hover:to-amber-500 text-black font-bold px-8 py-3.5 rounded-full text-xs uppercase tracking-wider transition shadow-[0_0_25px_rgba(212,175,55,0.4)] flex items-center space-x-2">
+                                            <span>Read Featured Story</span>
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </button>
+                                    ` : ''}
+                                    <button onclick="router.navigate('stories')" class="bg-cardBg hover:bg-white/10 border border-white/20 text-white font-bold px-8 py-3.5 rounded-full text-xs uppercase tracking-wider transition">
+                                        Browse Archive
+              
