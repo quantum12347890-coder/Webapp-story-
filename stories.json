@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "The Citadel of Solangels",
+    "slug": "citadel-of-solangels",
+    "category": "Creative",
+    "summary": "High above the shimmering coast, a golden bull stands guard over the eternal city.",
+    "content": "In the sprawling golden metropolis nestled between mystic mountain ranges, the grand citadel hummed with ancient energy. Citizens walked beneath amber streetlamps while distant melodies echoed from royal plazas...",
+    "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+    "moral": "True strength lies in unity and guarding the light against shadows.",
+    "tags": ["fantasy", "city"],
+    "date": "2026-08-19",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "title": "The Merchant of Baghdad's Ring",
+    "slug": "merchant-bagdad-ring",
+    "category": "Islamic",
+    "summary": "An honest trader discovers that true wealth is measured by charity and trust.",
+    "content": "In the bustling markets of ancient Baghdad, Tariq was known as the most honest spice merchant. One evening, a weary traveler left behind a pouch adorned with emeralds...",
+    "image": "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1200&q=80",
+    "moral": "Integrity is the highest currency in both worlds.",
+    "tags": ["faith", "wisdom"],
+    "date": "2026-08-18",
+    "featured": false
+  },
+  {
+    "id": 3,
+    "title": "Whispers in the Abandoned Lighthouse",
+    "slug": "whispers-abandoned-lighthouse",
+    "category": "Horror",
+    "summary": "A solitary keeper hears footsteps climbing the spiral iron staircase at midnight.",
+    "content": "The Black Rock Lighthouse had been dark for fifty years. Ignoring local superstitions, Liam took the job of restoring the beacon. On his third night, the heavy oak door creaked open...",
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+    "moral": "Some doors from the past are best left securely locked.",
+    "tags": ["ghost", "thriller"],
+    "date": "2026-08-17",
+    "featured": false
+  }
+]
+
